@@ -2,9 +2,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/firebase";
 import { collection, deleteDoc, updateDoc, doc } from "firebase/firestore";
-export async function DELETE(req: NextRequest, {params} : {params: {id : string}})
+export async function DELETE(req: NextRequest, context : {params: {id : string}})
 {
- const {id} = params;
+ const {id} = context.params;
  try {
   await deleteDoc(doc(db, "books", id));
       return new Response(
@@ -18,9 +18,9 @@ export async function DELETE(req: NextRequest, {params} : {params: {id : string}
  
 }
 
-export async function PUT(req : NextRequest , {params} : {params : {id: string}})
+export async function PUT(req : NextRequest , context : {params : {id: string}})
 {
- const {id} = params;
+ const {id} = context.params;
  const data = await req.json();
 try {
   const bookRef = doc(db, "books", id);
