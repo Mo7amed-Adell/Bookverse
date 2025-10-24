@@ -35,7 +35,7 @@ export default  function NavBar()  {
             ) : (
               // Logged-out state
               <Link
-                href="/signup"
+                href="/signUp"
                 className="font-bold text-black ml-4 hover:underline"
               >
                 Sign Up
