@@ -10,9 +10,9 @@ import { Star } from "lucide-react";
 import { UserRoundPlus } from 'lucide-react';
 import { useAuth } from "@/app/components/AuthProvider";
 
-
-export default  function bookDetail({params} : {params : {id : string}}) {
-const {id} = params;;
+type tParams = Promise<{ id: string }>;
+export default  function BookDetail({params} : {params : tParams}) {
+const {id} = use(params);
 const [book , setBook] = useState<Book | null>(null);
 const [IsInFavourites , setIsInFavourites] = useState<boolean>(false);
 const {loading , user} = useAuth();

@@ -4,11 +4,18 @@ import BookSearchFilter from "./components/bookSearchFilter";
 import NavBar from "./components/navbar";
 
 import { PrismaClient } from '@prisma/client';
+import { db } from "@/firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { Book } from "./types/types";
 
 const prisma = new PrismaClient();
 
 export default async function HomePage() {
- const featuredBooks = await (await fetch("http://localhost:3000/api/books")).json();
+  const querySnapshot = await getDocs(collection(db, "books"));
+    const featuredBooks = querySnapshot.docs.map(doc => ({
+      ...doc.data() as Book
+    }));
+
 
   return (
     <main className="min-h-screen bg-gray-100">
