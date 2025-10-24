@@ -8,7 +8,6 @@ import { db } from "@/firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Book } from "./types/types";
 
-const prisma = new PrismaClient();
 
 export default async function HomePage() {
   const querySnapshot = await getDocs(collection(db, "books"));
