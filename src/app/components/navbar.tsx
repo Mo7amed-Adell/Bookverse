@@ -21,7 +21,7 @@ export default  function NavBar()  {
   <nav className="bg-gray-100 h-15 border-b-4 border-gray-300 flex items-center justify-between px-4 ">
 
       {/* BookVerse Title */}
-      <span className=" font-bold text-black ml-4">📚BookVerse</span>
+      <Link href={"/"}><span className=" font-bold text-black ml-4">📚BookVerse</span> </Link>
       <div className=" mr-8">
         {user ? (
           <div

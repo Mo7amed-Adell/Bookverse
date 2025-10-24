@@ -9,6 +9,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Book } from "./types/types";
 
 
+
 export default async function HomePage() {
   const querySnapshot = await getDocs(collection(db, "books"));
     const featuredBooks = querySnapshot.docs.map(doc => ({
@@ -21,12 +22,12 @@ export default async function HomePage() {
       {/* Hero Section */}
       <NavBar/>
       <section className="relative text-center py-16 bg-gradient-to-r from-indigo-600  to-indigo-300 text-white">
-        <h1 className="text-4xl font-bold mb-4">📚 BookVerse</h1>
+        <h1 className="text-4xl font-bold mb-4">📚 BookVerse</h1> 
         <p className="text-lg mb-6">
           Discover, review, and share your favorite books.
         </p>
         <Link
-          href="/books"
+          href=""
           className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg shadow hover:bg-gray-200 transition"
         >
           Browse Books
@@ -44,7 +45,7 @@ export default async function HomePage() {
         <h2 className="text-2xl font-bold mb-4">Join the Community</h2>
         <p className="mb-6">Share your thoughts on your favorite books.</p>
         <Link
-          href="/signup"
+          href=""
           className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg shadow hover:bg-gray-200 transition"
         >
           Get Started
