@@ -29,7 +29,7 @@ export default function  SignUp() {
 
     }
   )
-      router.push("/"); 
+      router.push("./"); 
 
  }
  const handlePasswordSignUP = async() => {
@@ -44,7 +44,7 @@ export default function  SignUp() {
     createdAt: new Date(),
     lastLogin: new Date(),
     });
-      router.push("/"); 
+      router.push("./"); 
  }
  return (
  <div className="w-screen h-screen bg-gray-200 flex justify-center items-center">
