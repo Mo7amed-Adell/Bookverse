@@ -13,9 +13,39 @@ export default function SignIn()
  const [email , setEmail] = useState("");
  const [password , setPassword] = useState("");
  const router = useRouter();
+ const [errMessage , setErrMessage] = useState("");
  const handlePasswordSignIn = async() => {
+  try{ 
   const result = await signInWithEmailAndPassword(auth ,email , password);
    router.push("/"); 
+  } catch(error) {
+    if (error && typeof error === "object" && "code" in error) {
+    const code = (error as { code: string }).code;
+    switch (code) {
+      case "auth/user-not-found":
+        setErrMessage("user not found");
+        break;
+      case "auth/invalid-credential":
+        setErrMessage("wrong password.please try again");
+        break;  
+      case "auth/missing-email":
+        setErrMessage("please enter your email") ;
+        break;
+      case "auth/invalid-email":
+        setErrMessage("this email is invalid") ;
+        break;
+      case "auth/missing-password":
+        setErrMessage("please enter a password") ;
+        break;  
+    
+      default:
+        setErrMessage("an error occurred during sign in");
+        break;
+
+    }
+  }
+
+  }
 
  }
  const handleGoogleSignIn = async () => {
@@ -68,6 +98,7 @@ export default function SignIn()
        SignUp
     </Link>
    </span>
+   {errMessage && <span className="text-red-700">{errMessage}</span>}
   </div>
 </div>
  )

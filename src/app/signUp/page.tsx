@@ -1,7 +1,6 @@
 "use client";
 import { auth, provider, db } from "@/firebase.js"
 import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { saveUser } from "../utils/saveUser";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ export default function  SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
+  const [errMessage , setErrMessage] = useState("");
   const router = useRouter();
 
  const handleGoogleSignIn = async () => {
@@ -30,9 +30,11 @@ export default function  SignUp() {
     }
   )
       router.push("/"); 
-
  }
+
  const handlePasswordSignUP = async() => {
+  try{
+  if (!name.trim()) throw new Error("missing-name");
    const result = await createUserWithEmailAndPassword(auth, email, password);
    const user = result.user;
    await updateProfile(user, {displayName : name});
@@ -45,6 +47,44 @@ export default function  SignUp() {
     lastLogin: new Date(),
     });
       router.push("/"); 
+     }catch(error) {
+    if (error && typeof error === "object" && "code" in error) {
+      const code = (error as { code: string }).code;
+      switch (code) {
+       case "missing-name":
+        setErrMessage("Please enter your name.");
+        break;
+       case "auth/popup-closed-by-user":
+        setErrMessage("Sign-in window closed before completing. Please try again.");
+        break;
+       case "auth/cancelled-popup-request":
+        setErrMessage("Multiple sign-in requests. Please wait a moment.");
+        break;
+       case "auth/popup-blocked":
+        setErrMessage("Popup was blocked by your browser. Please allow popups for this site.");
+        break;
+       case "auth/network-request-failed":
+        setErrMessage("Network error. Check your internet connection and try again.");
+        break;
+       case "auth/email-already-in-use":
+        setErrMessage("this email is already in use") ;
+        break;
+      case "auth/missing-email":
+        setErrMessage("please enter your email") ;
+        break;
+      case "auth/invalid-email":
+        setErrMessage("this email is invalid") ;
+        break;
+      case "auth/missing-password":
+        setErrMessage("please enter a password") ;
+        break; 
+      case "auth/weak-password":
+        setErrMessage("very weak password, password should contain atleast 6 characters ") ;
+        break; 
+    
+    }
+  }
+  } 
  }
  return (
  <div className="w-screen h-screen bg-gray-200 flex justify-center items-center">
@@ -93,6 +133,7 @@ export default function  SignUp() {
        SignIn
     </Link>
     </span>
+    {errMessage && <span className="text-red-700">{errMessage}</span>}
   </div>
   
 </div>

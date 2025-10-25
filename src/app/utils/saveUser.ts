@@ -8,7 +8,7 @@ export async function saveUser(user : User)
   {
    name: user.displayName,
    uid: user.uid,
-   photoURL: user.photoURL,
+   photoURL: user.photoURL || null,
    email: user.email,
    lastLogin: serverTimestamp(),
    provider: user.provider,
