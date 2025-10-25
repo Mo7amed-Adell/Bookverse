@@ -32,10 +32,6 @@ Built with **Next.js**, **Firebase**, and **Tailwind CSS**, it provides a fast, 
 
 ---
 
-## 📸 Screenshots
-
-> *(Add your own screenshots here — for example, homepage, book details, favorites page, etc.)*
-
 ---
 
 ## ⚙️ Getting Started
