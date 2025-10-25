@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 import {Book} from "@/app/types/types";
 import { PrismaClient } from "@prisma/client";
 import NavBar from "@/app/components/navbar";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
 import {use} from "react"
 import { Star } from "lucide-react"; 
@@ -50,23 +50,17 @@ const handleAddToFavourites = async () => {
 
   if(favourites.includes(book.uid))
   {
-    await updateDoc(docRef , {
+    await setDoc(docRef , {
       favourites : arrayRemove(book.uid)
-    });
+    }, {merge: true});
     setIsInFavourites(false);
   } else {
-     if(!userData?.favourites) {
-      await updateDoc(docRef , {
-        favourites : []
-      })
-     }
-    await updateDoc(docRef , {
-        favourites : arrayUnion(book.uid)
-    });
-    setIsInFavourites(true);
+    await setDoc(docRef, {
+      favourites: arrayUnion(book.uid)
+    }, { merge: true });
 
+    setIsInFavourites(true);
   }
-   
 
    
 }

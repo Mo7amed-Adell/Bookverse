@@ -2,7 +2,7 @@
 import { auth, provider } from "@/firebase.js"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import Link from "next/link";
 
 
@@ -17,6 +17,7 @@ export default function SignIn()
  const handlePasswordSignIn = async() => {
   try{ 
   const result = await signInWithEmailAndPassword(auth ,email , password);
+  
    router.push("/"); 
   } catch(error) {
     if (error && typeof error === "object" && "code" in error) {
